@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: ["http://localhost:3000", "https://your-frontend-domain.vercel.app"], // Local aur Vercel dono ke liye
+  origin: ["http://localhost:3000", "https://sns-web-technologies.vercel.app"], // Local aur Vercel dono ke liye
   credentials: true
 }));
 
