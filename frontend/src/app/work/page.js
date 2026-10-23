@@ -3,21 +3,29 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Zap, ExternalLink, Code2, ShieldCheck, Cpu, Loader2 } from "lucide-react";
+import API from "@/utils/api"; // Centralized Axios instance imported
 
 export default function WorkPage() {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/projects")
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    setProjects(data.data);
+        const fetchProjects = async () => {
+            try {
+                const response = await API.get("/api/projects");
+                // Support both response formats (response.data.data or response.data)
+                const resData = response.data;
+                if (resData.success || Array.isArray(resData)) {
+                    setProjects(resData.data || resData);
                 }
-            })
-            .catch((err) => console.error("Failed to fetch projects:", err))
-            .finally(() => setLoading(false));
+            } catch (err) {
+                console.error("Failed to fetch projects:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProjects();
     }, []);
 
     return (
@@ -54,7 +62,7 @@ export default function WorkPage() {
                     <div className="space-y-8 md:space-y-12">
                         {projects.map((project, index) => (
                             <motion.div
-                                key={project._id}
+                                key={project._id || index}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
