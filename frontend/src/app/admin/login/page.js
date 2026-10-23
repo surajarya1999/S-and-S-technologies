@@ -28,7 +28,7 @@ export default function AdminLogin() {
       }
     } catch (err) {
       // Fallback local check agar backend route abhi configured nahi hai
-      if (credentials.username === "admin" && credentials.password === "ssdigital123") {
+      if (credentials.username === "surajarya460" && credentials.password === "suraj3214") {
         localStorage.setItem("adminToken", "authenticated_ss_studio");
         router.push("/admin/dashboard");
       } else {
