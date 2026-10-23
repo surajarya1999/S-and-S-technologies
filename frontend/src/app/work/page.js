@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Zap, ExternalLink, Code2, ShieldCheck, Cpu, Loader2 } from "lucide-react";
-import API from "@/utils/api"; // Centralized Axios instance imported
+import API from "@/lib/axios";
 
 export default function WorkPage() {
     const [projects, setProjects] = useState([]);

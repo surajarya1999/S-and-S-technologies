@@ -42,7 +42,7 @@ export default function Footer() {
                 S&S
               </div>
               <h3 className="font-extrabold text-lg text-white tracking-tight">
-                S&S Digital Studio
+                S&S Web Technologies
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm">
