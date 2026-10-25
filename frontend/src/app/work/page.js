@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Zap, ExternalLink, Code2, ShieldCheck, Cpu, Loader2 } from "lucide-react";
+import { Zap, ExternalLink, Code2, ShieldCheck, Cpu, Loader2, Sparkles } from "lucide-react";
 import API from "@/lib/axios";
 
 export default function WorkPage() {
@@ -13,7 +13,6 @@ export default function WorkPage() {
         const fetchProjects = async () => {
             try {
                 const response = await API.get("/api/projects");
-                // Support both response formats (response.data.data or response.data)
                 const resData = response.data;
                 if (resData.success || Array.isArray(resData)) {
                     setProjects(resData.data || resData);
@@ -31,24 +30,51 @@ export default function WorkPage() {
     return (
         <div className="bg-[#F9F8F6] text-[#111111] font-sans min-h-screen grid-pattern relative overflow-x-hidden">
             <main className="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="border-b border-[#E8E5DF] pb-8 md:pb-12 mb-8 md:mb-12"
-                >
-                    <span className="text-[10px] md:text-xs font-bold text-amber-600 uppercase tracking-widest">
-                        Portfolio Case Studies
-                    </span>
-                    <h1 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tight text-slate-900 mt-2 mb-4 leading-tight">
-                        High-converting digital products <br className="hidden sm:inline" />
-                        <span className="text-slate-400 font-normal">engineered for performance.</span>
-                    </h1>
-                    <p className="text-slate-600 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed">
-                        Detailed breakdown of production-ready web applications built with Next.js, Tailwind CSS, and 3D interactive graphics.
-                    </p>
-                </motion.div>
 
+                {/* HEADER SECTION WITH DESIGN BANNER IMAGE */}
+                <div className="grid lg:grid-cols-12 gap-8 items-center border-b border-[#E8E5DF] pb-8 md:pb-12 mb-8 md:mb-12">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="lg:col-span-7 space-y-4"
+                    >
+                        <span className="text-[10px] md:text-xs font-bold text-amber-600 uppercase tracking-widest inline-flex items-center gap-1.5 bg-amber-100/70 px-3 py-1 rounded-full">
+                            <Sparkles className="w-3 h-3 text-amber-600" />
+                            Portfolio Case Studies
+                        </span>
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+                            High-converting digital products <br className="hidden sm:inline" />
+                            <span className="text-slate-400 font-normal">engineered for performance.</span>
+                        </h1>
+                        <p className="text-slate-600 text-xs sm:text-sm md:text-base max-w-xl leading-relaxed">
+                            Detailed breakdown of production-ready web applications built with Next.js, Tailwind CSS, and modern full-stack architecture.
+                        </p>
+                    </motion.div>
+
+                    {/* TOP FEATURED DESIGN BANNER (DYNAMIC PROJECTS KO TOUCH KIYE BINA) */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="lg:col-span-5 relative"
+                    >
+                        <div className="absolute -z-10 w-full h-full bg-amber-400/10 rounded-3xl blur-2xl" />
+                        <div className="rounded-2xl border border-slate-200/80 bg-white p-2 shadow-lg overflow-hidden group">
+                            <img
+                                src="/banner3.png"
+                                alt="S&S Studio Workflow Showcase"
+                                className="w-full h-48 sm:h-56 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="p-2.5 flex items-center justify-between text-[11px] font-bold text-slate-700 bg-slate-50 rounded-lg mt-2 border border-slate-100">
+                                <span>3D Interactive & UI Studio</span>
+                                <span className="text-amber-600">Engineering Excellence</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* DYNAMIC PROJECTS FROM DATABASE */}
                 {loading ? (
                     <div className="py-20 flex flex-col items-center justify-center gap-3 text-slate-500 text-xs font-semibold">
                         <Loader2 className="w-6 h-6 animate-spin text-amber-600" />

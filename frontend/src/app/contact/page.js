@@ -75,7 +75,7 @@ export default function ContactPage() {
                             <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400">
                                 Direct Contact
                             </span>
-                            <h3 className="text-xl sm:text-2xl font-bold mt-1 mb-2 sm:mb-3">S&S Digital Studio</h3>
+                            <h3 className="text-xl sm:text-2xl font-bold mt-1 mb-2 sm:mb-3">S&S Web Technologies</h3>
                             <p className="text-xs text-slate-400 leading-relaxed">
                                 Available for Q4 client engagements, Next.js migrations, and interactive digital product engineering.
                             </p>
@@ -88,7 +88,7 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <p className="font-semibold text-slate-400 text-[9px] sm:text-[10px] uppercase">Email Us</p>
-                                    <p className="font-bold text-white text-xs sm:text-sm">hello@ssdigitalstudio.com</p>
+                                    <p className="font-bold text-white text-xs sm:text-sm">sswebtech.com</p>
                                 </div>
                             </div>
 
@@ -130,7 +130,7 @@ export default function ContactPage() {
                                 </div>
                                 <h3 className="text-xl sm:text-2xl font-bold text-slate-900">Inquiry Received!</h3>
                                 <p className="text-slate-600 text-xs max-w-sm mx-auto leading-relaxed">
-                                    Thank you for reaching out. S&S Digital Studio team will review your project requirements and respond within 2 hours.
+                                    Thank you for reaching out. S&S Web Technologies team will review your project requirements and respond within 2 hours.
                                 </p>
                             </div>
                         ) : (

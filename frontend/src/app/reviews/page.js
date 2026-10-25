@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import API from "@/lib/axios"; // Axios instance import kiya gaya hai
-import { Star, MessageSquare, CheckCircle, Loader2, Quote, Send } from "lucide-react";
+import { Star, MessageSquare, CheckCircle, Loader2, Quote, Send, Sparkles } from "lucide-react";
 
 export default function ReviewsPage() {
     const [feedbacks, setFeedbacks] = useState([]);
@@ -56,22 +56,46 @@ export default function ReviewsPage() {
         <div className="bg-[#F9F8F6] text-[#111111] font-sans min-h-screen">
             <main className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16">
 
-                {/* Header */}
+                {/* Header with 3D Banner Image Integration */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="border-b border-[#E8E5DF] pb-8 md:pb-12 mb-12"
+                    className="border-b border-[#E8E5DF] pb-8 md:pb-12 mb-12 grid lg:grid-cols-12 gap-8 items-center"
                 >
-                    <span className="text-[10px] md:text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-100/60 px-3 py-1 rounded-full">
-                        Client Testimonials
-                    </span>
-                    <h1 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tight text-slate-900 mt-3 mb-3">
-                        Proof of <span className="text-slate-400 font-normal">engineering excellence.</span>
-                    </h1>
-                    <p className="text-slate-600 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed">
-                        Read real feedback from clients and collaborators on our delivered full-stack web applications.
-                    </p>
+                    <div className="lg:col-span-7 space-y-4">
+                        <span className="text-[10px] md:text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-100/70 px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                            <Sparkles className="w-3 h-3 text-amber-600" />
+                            Client Testimonials
+                        </span>
+                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
+                            Proof of <span className="text-slate-400 font-normal">engineering excellence.</span>
+                        </h1>
+                        <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
+                            Read real feedback from clients and collaborators on our delivered full-stack web applications.
+                        </p>
+                    </div>
+
+                    {/* Integrated 3D Design Banner */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="lg:col-span-5 relative"
+                    >
+                        <div className="absolute -z-10 w-full h-full bg-amber-400/10 rounded-3xl blur-2xl" />
+                        <div className="rounded-2xl border border-slate-200/80 bg-white p-2 shadow-lg overflow-hidden group">
+                            <img
+                                src="/banner1.png"
+                                alt="S&S Client Trust Showcase"
+                                className="w-full h-44 sm:h-52 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="p-2.5 flex items-center justify-between text-[11px] font-bold text-slate-700 bg-slate-50 rounded-lg mt-2 border border-slate-100">
+                                <span>100% Verified Reviews</span>
+                                <span className="text-amber-600">Client Satisfaction</span>
+                            </div>
+                        </div>
+                    </motion.div>
                 </motion.div>
 
                 {/* Approved Reviews Showcase */}

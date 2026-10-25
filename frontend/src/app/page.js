@@ -79,42 +79,59 @@ export default function Home() {
 
       <main className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 max-w-7xl">
 
-        {/* HERO SECTION WITH FULL-WIDTH RESPONSIVE VIDEO */}
-        <section className="py-8 sm:py-12 md:py-16 border-b border-[#E8E5DF] relative w-full flex flex-col items-center">
+        {/* HERO SECTION WITH SIDE-BY-SIDE TEXT & IMAGE LAYOUT */}
+        <section className="py-8 sm:py-12 md:py-16 border-b border-[#E8E5DF] relative w-full">
 
-          <div className="text-center max-w-3xl mx-auto space-y-5 mb-10 sm:mb-14">
-            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-amber-100/80 text-amber-900 text-[11px] sm:text-xs font-bold border border-amber-200 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-              Available for Q4 Client Engagements
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-12 sm:mb-16">
+
+            {/* LEFT COLUMN - TEXT & BUTTONS */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-amber-100/80 text-amber-900 text-[11px] sm:text-xs font-bold border border-amber-200 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
+                Available for Q4 Client Engagements
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-[-0.045em] text-slate-950 leading-[1.08]">
+                High-converting web platforms{" "}
+                <span className="text-slate-400 font-normal block sm:inline">
+                  engineered by S&S. Web Technologies
+                </span>
+              </h1>
+
+              <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
+                We build fast, responsive, and production-ready Next.js applications, Tailwind CSS interfaces, and interactive digital products designed to scale your revenue.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-2">
+                <a
+                  href="#pricing"
+                  className="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-950 text-white text-xs font-bold uppercase tracking-wider hover:bg-amber-600 transition-colors duration-300 flex items-center justify-center gap-2 shadow-md"
+                >
+                  <span>Calculate Project Cost</span>
+                  <Calculator className="w-4 h-4" />
+                </a>
+
+                <Link
+                  href="/work"
+                  className="w-full sm:w-auto px-6 py-4 rounded-xl border border-slate-300 bg-white text-slate-800 text-xs font-bold uppercase tracking-wider hover:border-slate-900 hover:bg-slate-50 transition-colors duration-300 text-center shadow-sm"
+                >
+                  View Case Studies
+                </Link>
+              </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.045em] text-slate-950 leading-[1.08]">
-              High-converting web platforms{" "}
-              <span className="text-slate-400 font-normal block sm:inline">
-                engineered by S&S.
-              </span>
-            </h1>
-
-            <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-              We build fast, responsive, and production-ready Next.js applications, Tailwind CSS interfaces, and interactive digital products designed to scale your revenue.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
-              <a
-                href="#pricing"
-                className="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-950 text-white text-xs font-bold uppercase tracking-wider hover:bg-amber-600 transition-colors duration-300 flex items-center justify-center gap-2 shadow-md"
-              >
-                <span>Calculate Project Cost</span>
-                <Calculator className="w-4 h-4" />
-              </a>
-
-              <Link
-                href="/work"
-                className="w-full sm:w-auto px-6 py-4 rounded-xl border border-slate-300 bg-white text-slate-800 text-xs font-bold uppercase tracking-wider hover:border-slate-900 hover:bg-slate-50 transition-colors duration-300 text-center shadow-sm"
-              >
-                View Case Studies
-              </Link>
+            {/* RIGHT COLUMN - STYLISH 3D IMAGE PREVIEW */}
+            <div className="lg:col-span-5 relative">
+              <div className="absolute -z-10 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              <div className="rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white p-2 shadow-xl overflow-hidden group">
+                <img
+                  src="/banner4.png"
+                  alt="S&S Web Technologies Showcase"
+                  className="w-full h-[280px] sm:h-[340px] object-cover rounded-xl sm:rounded-2xl group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
             </div>
+
           </div>
 
           {/* FULL-WIDTH RESPONSIVE VIDEO BANNER WITH 10S DELAY SLOW-MO THEME TEXT */}
@@ -132,17 +149,13 @@ export default function Home() {
 
             {/* 10s Delay Slow-mo Text Overlay Matched with Website Theme */}
             {showText && (
-              <div className="absolute inset-0 flex items-center justify-center  pointer-events-none px-4 transition-all duration-1000">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-4 transition-all duration-1000">
                 <h2 className="text-[#F9F8F6] font-extrabold text-2xl sm:text-4xl md:text-6xl tracking-wide text-center drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] animate-slowmo-fade">
                   Welcome to <span className="text-amber-400 font-black">S&S Web Technologies</span>
                 </h2>
               </div>
             )}
 
-            <div className="absolute bottom-4 right-4 px-3.5 py-2 bg-slate-950/85 backdrop-blur border border-slate-700 rounded-full text-[10px] sm:text-xs font-bold text-amber-400 pointer-events-none flex items-center gap-2 shadow-lg">
-              <PlayCircle className="w-4 h-4 text-amber-400" />
-              Product Engineering Showcase
-            </div>
           </div>
 
         </section>

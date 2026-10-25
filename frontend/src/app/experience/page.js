@@ -9,6 +9,7 @@ const skillCategories = [
   {
     title: "Frontend Engineering",
     icon: Layout,
+    banner: "/banner5.png", // Ensure public/banner5.png exists
     gradient: "from-amber-500/15 via-orange-500/10 to-transparent border-amber-500/30 hover:border-amber-500",
     iconBg: "bg-amber-500 text-slate-950",
     accentText: "text-amber-500",
@@ -17,6 +18,7 @@ const skillCategories = [
   {
     title: "Backend & Systems",
     icon: Database,
+    banner: "/banner2.png", // Ensure public/banner.png exists
     gradient: "from-violet-500/15 via-purple-500/10 to-transparent border-violet-500/30 hover:border-violet-500",
     iconBg: "bg-violet-600 text-white",
     accentText: "text-violet-500",
@@ -25,6 +27,7 @@ const skillCategories = [
   {
     title: "Performance & Quality",
     icon: Cpu,
+    banner: "/banner6.png", // Ensure public/banner2.png exists
     gradient: "from-cyan-500/15 via-blue-500/10 to-transparent border-cyan-500/30 hover:border-cyan-500",
     iconBg: "bg-cyan-600 text-white",
     accentText: "text-cyan-500",
@@ -159,7 +162,7 @@ export default function ExperiencePage() {
   return (
     <div className="bg-[#F9F8F6] text-[#111111] font-sans min-h-screen grid-pattern relative overflow-x-hidden">
       <main className="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16 space-y-12 md:space-y-20">
-        
+
         {/* TOP BANNER WITH 3D INTERACTIVE GRAPHIC */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -185,16 +188,16 @@ export default function ExperiencePage() {
             <div className="absolute -z-10 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl" />
             <div
               ref={canvasContainerRef}
-              className="w-full h-[260px] sm:h-[320px] cursor-grab active:cursor-grabbing rounded-2xl relative overflow-hidden flex items-center justify-center "
+              className="w-full h-[260px] sm:h-[320px] cursor-grab active:cursor-grabbing rounded-2xl relative overflow-hidden flex items-center justify-center"
             />
-            <div className="absolute bottom-3 right-4 px-3 py-1.5 bg-white/80 backdrop-blur border border-slate-200/80 rounded-full text-[10px] font-bold text-slate-500 pointer-events-none flex items-center gap-1.5">
+            <div className="absolute bottom-3 right-4 px-3 py-1.5 bg-white/80 backdrop-blur border border-slate-200/80 rounded-full text-[10px] font-bold text-slate-500 pointer-events-none flex items-center gap-1.5 shadow-sm">
               <Rotate3D className="w-3 h-3 text-amber-600" />
               Interactive 3D Geometry
             </div>
           </div>
         </motion.div>
 
-        {/* COLORFUL SKILLS CARDS SECTION */}
+        {/* COLORFUL SKILLS CARDS SECTION WITH PROMINENT BANNERS */}
         <section>
           <div className="flex items-center gap-2 mb-6 sm:mb-8">
             <Award className="w-5 h-5 text-amber-600" />
@@ -211,14 +214,23 @@ export default function ExperiencePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`bg-gradient-to-br ${cat.gradient} bg-white border rounded-3xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between`}
+                  className={`bg-gradient-to-br ${cat.gradient} bg-white border rounded-3xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group overflow-hidden`}
                 >
-                  <div>
-                    <div className={`w-12 h-12 rounded-2xl ${cat.iconBg} flex items-center justify-center mb-5 shadow-sm`}>
-                      <Icon className="w-6 h-6" />
+                  <div className="space-y-5">
+                    {/* Prominent Banner Image on top of each card */}
+                    <div className="w-full h-40 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100 relative">
+                      <img
+                        src={cat.banner}
+                        alt={cat.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      />
+                      <div className="absolute top-3 left-3 px-2.5 py-1 bg-slate-950/80 backdrop-blur text-white rounded-lg flex items-center gap-1.5 shadow">
+                        <Icon className="w-3.5 h-3.5 text-amber-400" />
+                        <span className="text-[10px] font-bold">{cat.title}</span>
+                      </div>
                     </div>
-                    <h3 className="font-extrabold text-lg sm:text-xl text-slate-900 mb-4">{cat.title}</h3>
-                    <ul className="space-y-3">
+
+                    <ul className="space-y-3 pt-2">
                       {cat.skills.map((skill, sIdx) => (
                         <li key={sIdx} className="text-xs sm:text-sm text-slate-700 font-medium flex items-center gap-2.5">
                           <CheckCircle2 className={`w-4 h-4 ${cat.accentText} flex-shrink-0`} />
@@ -227,10 +239,13 @@ export default function ExperiencePage() {
                       ))}
                     </ul>
                   </div>
-                  
-                  <div className="pt-6 mt-6 border-t border-slate-100 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                    <Sparkles className="w-3 h-3 text-amber-500" />
-                    <span>Production Grade</span>
+
+                  <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-amber-500" />
+                      Production Grade
+                    </span>
+                    <span className="text-amber-600">S&S Standard</span>
                   </div>
                 </motion.div>
               );
