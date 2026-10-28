@@ -12,3 +12,72 @@ body {
     linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
+
+/* Custom animations for the S&S Web Technologies home page */
+
+@keyframes slowmo-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.animate-slowmo-fade {
+  animation: slowmo-fade 2.5s ease-out forwards;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+.animate-floaty-slow {
+  animation: floaty 7s ease-in-out infinite;
+}
+
+@keyframes shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gradient-text {
+  background-size: 200% 200%;
+  animation: shift 8s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slowmo-fade,
+  .animate-floaty,
+  .animate-floaty-slow,
+  .gradient-text {
+    animation: none;
+  }
+}
+
+/* OPTIONAL: only needed if your project does not already define .grid-pattern
+   (your original globals.css had it, so normally leave this commented out). */
+
+.grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}

@@ -8,25 +8,35 @@ import {
   Code2,
   Database,
   MessageSquare,
-  PlayCircle,
   Sparkles,
+  Zap,
+  Smartphone,
+  Rocket,
+  Check,
 } from "lucide-react";
+
+const RATES = { INR: 1, USD: 0.012 };
+const SYMBOLS = { INR: "₹", USD: "$" };
+
+const BASE = { frontend: 12000, fullstack: 28000 };
+
+const ADDONS = [
+  { key: "fastDelivery", label: "Express 48-Hour Delivery", short: "Express Delivery", price: 3000, emoji: "⚡", tone: "from-amber-400 to-orange-500" },
+  { key: "adminPanel", label: "Custom Admin Dashboard", short: "Admin Dashboard", price: 6500, emoji: "⚙️", tone: "from-violet-500 to-fuchsia-500" },
+  { key: "seoSetup", label: "Technical SEO & Performance", short: "Technical SEO", price: 2500, emoji: "🚀", tone: "from-cyan-400 to-blue-500" },
+  { key: "maintenance", label: "1-Month Post-Launch Support", short: "1-Mo Support", price: 4000, emoji: "🛠️", tone: "from-emerald-400 to-teal-500" },
+];
+
+const FEATURES = [
+  { icon: Zap, title: "Fast by default", text: "Next.js App Router, optimized images and clean code for quick loads.", tone: "from-amber-400 to-orange-500", glow: "shadow-orange-200" },
+  { icon: Smartphone, title: "Fully responsive", text: "Looks perfect on every screen: phone, tablet, or desktop.", tone: "from-pink-500 to-rose-500", glow: "shadow-pink-200" },
+  { icon: Rocket, title: "Built to convert", text: "Clear CTAs and SEO setup that turn visitors into customers.", tone: "from-violet-500 to-indigo-500", glow: "shadow-violet-200" },
+];
 
 export default function Home() {
   const [showText, setShowText] = useState(false);
-
-  // Video play hone ke exact 10 seconds baad text show karne ke liye timer
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowText(true);
-    }, 10000); // 10000ms = 10 seconds
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const [currency, setCurrency] = useState("INR");
   const [plan, setPlan] = useState("frontend");
-
   const [addons, setAddons] = useState({
     fastDelivery: false,
     adminPanel: false,
@@ -34,107 +44,96 @@ export default function Home() {
     maintenance: false,
   });
 
-  const rates = { INR: 1, USD: 0.012 };
-  const symbols = { INR: "₹", USD: "$" };
+  // Show the welcome text 10 seconds after the video starts
+  useEffect(() => {
+    const timer = setTimeout(() => setShowText(true), 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const prices = {
-    base: { frontend: 12000, fullstack: 28000 },
-    addons: {
-      fastDelivery: 3000,
-      adminPanel: 6500,
-      seoSetup: 2500,
-      maintenance: 4000,
-    },
-  };
+  const rate = RATES[currency];
+  const sym = SYMBOLS[currency];
+  const money = (n) => `${sym}${Math.round(n * rate).toLocaleString()}`;
 
-  const rate = rates[currency];
-  const sym = symbols[currency];
+  const total = ADDONS.reduce(
+    (sum, a) => (addons[a.key] ? sum + a.price : sum),
+    BASE[plan]
+  );
+  const formattedTotal = money(total);
 
-  const calculateTotal = () => {
-    let total = prices.base[plan];
+  const toggleAddon = (key) => setAddons((p) => ({ ...p, [key]: !p[key] }));
 
-    if (addons.fastDelivery) total += prices.addons.fastDelivery;
-    if (addons.adminPanel) total += prices.addons.adminPanel;
-    if (addons.seoSetup) total += prices.addons.seoSetup;
-    if (addons.maintenance) total += prices.addons.maintenance;
-
-    return Math.round(total * rate).toLocaleString();
-  };
-
-  const toggleAddon = (key) => {
-    setAddons((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
-
-  const formattedTotal = `${sym}${calculateTotal()}`;
-
-  const whatsappUrl = `https://wa.me/+917509478047?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/917509478047?text=${encodeURIComponent(
     `Hi S&S Digital Studio! I calculated an estimate for a ${plan} project. Estimated Budget: ${formattedTotal}`
   )}`;
 
   return (
-    <div className="bg-[#F9F8F6] text-[#111111] font-sans antialiased selection:bg-slate-900 selection:text-white grid-pattern relative overflow-x-hidden min-h-screen w-full">
+    <div className="grid-pattern relative min-h-screen w-full overflow-x-hidden bg-[#F9F8F6] font-sans text-[#111111] antialiased selection:bg-fuchsia-500 selection:text-white">
+      <main className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-6 sm:px-6 md:pb-10 lg:px-8">
+        {/* HERO WITH VIDEO BACKGROUND */}
+        <section className="w-full pb-8 sm:pb-12 md:pb-16">
+          <div className="relative isolate left-1/2 mb-12 w-screen -translate-x-1/2 overflow-hidden bg-black sm:mb-16">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              disablePictureInPicture
+              aria-hidden="true"
+              className="absolute inset-0 -z-20 h-full w-full object-cover will-change-transform [-webkit-backface-visibility:hidden] [transform:translateZ(0)]"
+            >
+              <source src="/v3.mp4" type="video/mp4" />
+            </video>
+            <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/35 to-black/70" />
+            <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.55)_100%)]" />
 
-      <main className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 max-w-7xl">
-
-        {/* HERO SECTION WITH SIDE-BY-SIDE TEXT & IMAGE LAYOUT */}
-        <section className="py-8 sm:py-12 md:py-16 border-b border-[#E8E5DF] relative w-full">
-
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-12 sm:mb-16">
-
-            {/* LEFT COLUMN - TEXT & BUTTONS */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-amber-100/80 text-amber-900 text-[11px] sm:text-xs font-bold border border-amber-200 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
+            <div className="mx-auto flex min-h-[540px] max-w-3xl flex-col items-center justify-center space-y-6 px-5 py-16 text-center sm:min-h-[600px] sm:px-8 md:min-h-[680px]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2 text-xs font-bold text-white backdrop-blur">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-300 opacity-75" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-400" />
+                </span>
                 Available for Q4 Client Engagements
               </div>
 
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-[-0.045em] text-slate-950 leading-[1.08]">
+              <h1 className="text-4xl font-black leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl">
                 High-converting web platforms{" "}
-                <span className="text-slate-400 font-normal block sm:inline">
-                  engineered by S&S. Web Technologies
+                <span className="gradient-text block bg-gradient-to-r from-amber-300 via-blue-300 to-pink-400 bg-clip-text text-transparent">
+                  engineered by S&S Web Technologies
                 </span>
               </h1>
 
-              <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
+              <p className="max-w-xl text-base leading-relaxed text-white/90 md:text-lg">
                 We build fast, responsive, and production-ready Next.js applications, Tailwind CSS interfaces, and interactive digital products designed to scale your revenue.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-2">
+              <div className="flex w-full flex-col items-stretch gap-3 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
                 <a
                   href="#pricing"
-                  className="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-950 text-white text-xs font-bold uppercase tracking-wider hover:bg-amber-600 transition-colors duration-300 flex items-center justify-center gap-2 shadow-md"
+                  className="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-500 to-pink-500 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-fuchsia-900/40 transition hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus-visible:ring-4 focus-visible:ring-fuchsia-300"
                 >
-                  <span>Calculate Project Cost</span>
-                  <Calculator className="w-4 h-4" />
+                  <Calculator className="h-4 w-4" />
+                  Calculate Project Cost
                 </a>
-
                 <Link
                   href="/work"
-                  className="w-full sm:w-auto px-6 py-4 rounded-xl border border-slate-300 bg-white text-slate-800 text-xs font-bold uppercase tracking-wider hover:border-slate-900 hover:bg-slate-50 transition-colors duration-300 text-center shadow-sm"
+                  className="rounded-2xl border-2 border-white/70 bg-white/10 px-7 py-4 text-center text-sm font-bold text-white backdrop-blur transition hover:bg-white/25 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/50"
                 >
                   View Case Studies
                 </Link>
               </div>
-            </div>
 
-            {/* RIGHT COLUMN - STYLISH 3D IMAGE PREVIEW */}
-            <div className="lg:col-span-5 relative">
-              <div className="absolute -z-10 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              <div className="rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white p-2 shadow-xl overflow-hidden group">
-                <img
-                  src="/banner4.png"
-                  alt="S&S Web Technologies Showcase"
-                  className="w-full h-[280px] sm:h-[340px] object-cover rounded-xl sm:rounded-2xl group-hover:scale-105 transition-transform duration-700"
-                />
+              <div className="flex flex-wrap justify-center gap-2 pt-2">
+                {["Next.js", "Tailwind CSS", "React", "SEO Ready"].map((t) => (
+                  <span key={t} className="rounded-full border border-white/25 bg-white/15 px-3 py-1 text-xs font-bold text-white backdrop-blur">
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
-
           </div>
 
-          {/* FULL-WIDTH RESPONSIVE VIDEO BANNER WITH 10S DELAY SLOW-MO THEME TEXT */}
+          {/* Video banner */}
           <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 shadow-2xl group max-w-8xl mx-auto">
             <video
               autoPlay
@@ -156,167 +155,116 @@ export default function Home() {
               </div>
             )}
 
+            
           </div>
-
         </section>
 
-        {/* COST ESTIMATOR SECTION */}
-        <section
-          id="pricing"
-          className="py-14 sm:py-18 md:py-20 border-b border-[#E8E5DF] w-full"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-5">
-            <div>
-              <span className="text-[10px] sm:text-xs font-bold text-amber-700 uppercase tracking-[0.2em]">
-                Transparent Pricing
-              </span>
+        {/* FEATURES */}
+        <section className="grid gap-4 py-6 sm:grid-cols-2 md:py-10 lg:grid-cols-3">
+          {FEATURES.map(({ icon: Icon, title, text, tone, glow }) => (
+            <div key={title} className={`rounded-3xl border border-white bg-white p-6 shadow-lg ${glow} transition hover:-translate-y-1`}>
+              <div className={`mb-4 inline-flex rounded-2xl bg-gradient-to-br ${tone} p-3 text-white shadow-md`}>
+                <Icon className="h-6 w-6" />
+              </div>
+              <h3 className="mb-1 text-lg font-extrabold text-slate-950">{title}</h3>
+              <p className="text-sm leading-6 text-slate-600">{text}</p>
+            </div>
+          ))}
+        </section>
 
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 mt-2">
+        {/* COST ESTIMATOR */}
+        <section id="pricing" className="w-full scroll-mt-6 py-14 sm:py-16 md:py-20">
+          <div className="mb-8 flex flex-col items-start justify-between gap-5 sm:mb-12 md:flex-row md:items-end">
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-3 py-1 text-xs font-bold text-violet-700">
+                <Sparkles className="h-3.5 w-3.5" /> Transparent Pricing
+              </span>
+              <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl md:text-5xl">
                 Project Budget Estimator
               </h2>
             </div>
 
-            <div className="bg-white p-1 rounded-xl flex items-center gap-1 border border-slate-200 shadow-sm">
-              <button
-                onClick={() => setCurrency("INR")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors ${currency === "INR"
-                  ? "bg-slate-950 text-white"
-                  : "text-slate-600 hover:text-slate-950"
-                  }`}
-              >
-                ₹ INR
-              </button>
-
-              <button
-                onClick={() => setCurrency("USD")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors ${currency === "USD"
-                  ? "bg-slate-950 text-white"
-                  : "text-slate-600 hover:text-slate-950"
-                  }`}
-              >
-                $ USD
-              </button>
+            <div className="flex items-center gap-1 rounded-2xl border border-violet-100 bg-white p-1 shadow-sm">
+              {["INR", "USD"].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setCurrency(c)}
+                  aria-pressed={currency === c}
+                  className={`rounded-xl px-5 py-2 text-xs font-bold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-violet-200 ${currency === c
+                    ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow"
+                    : "text-slate-600 hover:text-violet-700"
+                    }`}
+                >
+                  {SYMBOLS[c]} {c}
+                </button>
+              ))}
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 w-full">
-            <div className="lg:col-span-2 space-y-8 sm:space-y-10">
-
-              {/* PRIMARY SCOPE */}
+          <div className="grid w-full gap-6 sm:gap-8 lg:grid-cols-3">
+            <div className="space-y-8 sm:space-y-10 lg:col-span-2">
+              {/* Plan */}
               <div>
-                <h3 className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-[0.16em] mb-4">
-                  1. Select Primary Scope
-                </h3>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div
-                    onClick={() => setPlan("frontend")}
-                    className={`group p-5 sm:p-6 rounded-2xl border cursor-pointer transition-all duration-200 ${plan === "frontend"
-                      ? "bg-white border-amber-500 ring-2 ring-amber-500/20 shadow-md"
-                      : "bg-white/60 border-slate-200 hover:border-amber-300 shadow-sm"
-                      }`}
-                  >
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="p-2.5 bg-slate-100 rounded-xl group-hover:bg-amber-50 transition-colors">
-                        <Code2 className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900" />
-                      </div>
-
-                      <span className="text-lg sm:text-xl font-black text-slate-950">
-                        {sym}
-                        {Math.round(prices.base.frontend * rate).toLocaleString()}
-                      </span>
-                    </div>
-
-                    <h4 className="font-bold text-slate-950 text-sm sm:text-base mb-2">
-                      Frontend Web Application
-                    </h4>
-
-                    <p className="text-xs sm:text-sm text-slate-500 leading-6">
-                      Pixel-perfect React/Next.js interface, 100% responsive, custom animations & optimized SEO.
-                    </p>
-                  </div>
-
-                  <div
-                    onClick={() => setPlan("fullstack")}
-                    className={`group p-5 sm:p-6 rounded-2xl border cursor-pointer transition-all duration-200 ${plan === "fullstack"
-                      ? "bg-white border-amber-500 ring-2 ring-amber-500/20 shadow-md"
-                      : "bg-white/60 border-slate-200 hover:border-amber-300 shadow-sm"
-                      }`}
-                  >
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="p-2.5 bg-amber-50 rounded-xl group-hover:bg-amber-100 transition-colors">
-                        <Database className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />
-                      </div>
-
-                      <span className="text-lg sm:text-xl font-black text-slate-950">
-                        {sym}
-                        {Math.round(prices.base.fullstack * rate).toLocaleString()}+
-                      </span>
-                    </div>
-
-                    <h4 className="font-bold text-slate-950 text-sm sm:text-base mb-2">
-                      Full-Stack Platform
-                    </h4>
-
-                    <p className="text-xs sm:text-sm text-slate-500 leading-6">
-                      Complete application with Next.js App Router, Database integration, User Auth, & Custom APIs.
-                    </p>
-                  </div>
+                <h3 className="mb-4 text-sm font-extrabold text-slate-700">1. Select Primary Scope</h3>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {[
+                    { id: "frontend", icon: Code2, title: "Frontend Web Application", text: "Pixel-perfect React/Next.js interface, 100% responsive, custom animations & optimized SEO.", tone: "from-cyan-400 to-blue-600", ring: "border-blue-500 ring-blue-200", plus: "" },
+                    { id: "fullstack", icon: Database, title: "Full-Stack Platform", text: "Complete application with Next.js App Router, Database integration, User Auth, & Custom APIs.", tone: "from-fuchsia-500 to-orange-500", ring: "border-fuchsia-500 ring-fuchsia-200", plus: "+" },
+                  ].map((p) => {
+                    const active = plan === p.id;
+                    const Icon = p.icon;
+                    return (
+                      <button
+                        type="button"
+                        key={p.id}
+                        onClick={() => setPlan(p.id)}
+                        aria-pressed={active}
+                        className={`rounded-3xl border-2 bg-white p-5 text-left transition-all duration-200 focus:outline-none focus-visible:ring-4 sm:p-6 ${active ? `${p.ring} ring-4 shadow-xl` : "border-slate-200 shadow-sm hover:border-violet-300"
+                          }`}
+                      >
+                        <div className="mb-4 flex items-start justify-between gap-3">
+                          <div className={`rounded-2xl bg-gradient-to-br ${p.tone} p-3 text-white shadow-md`}>
+                            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                          </div>
+                          <span className="text-xl font-black text-slate-950">
+                            {money(BASE[p.id])}
+                            {p.plus}
+                          </span>
+                        </div>
+                        <h4 className="mb-2 text-base font-extrabold text-slate-950">{p.title}</h4>
+                        <p className="text-sm leading-6 text-slate-500">{p.text}</p>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* ADDONS */}
+              {/* Add-ons */}
               <div>
-                <h3 className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-[0.16em] mb-4">
-                  2. Choose Optional Add-ons
-                </h3>
-
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {[
-                    {
-                      key: "fastDelivery",
-                      label: "⚡ Express 48-Hour Delivery",
-                      price: prices.addons.fastDelivery,
-                    },
-                    {
-                      key: "adminPanel",
-                      label: "⚙️ Custom Admin Dashboard",
-                      price: prices.addons.adminPanel,
-                    },
-                    {
-                      key: "seoSetup",
-                      label: "🚀 Technical SEO & Performance",
-                      price: prices.addons.seoSetup,
-                    },
-                    {
-                      key: "maintenance",
-                      label: "🛠️ 1-Month Post-Launch Support",
-                      price: prices.addons.maintenance,
-                    },
-                  ].map((item) => (
+                <h3 className="mb-4 text-sm font-extrabold text-slate-700">2. Choose Optional Add-ons</h3>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {ADDONS.map((a) => (
                     <label
-                      key={item.key}
-                      className={`p-4 rounded-xl border text-slate-700 cursor-pointer flex items-center justify-between gap-3 text-xs transition-colors duration-200 shadow-sm ${addons[item.key]
-                        ? "border-amber-500 bg-amber-50/70 font-semibold"
-                        : "border-slate-200 bg-white hover:border-amber-300"
+                      key={a.key}
+                      className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 p-4 text-sm transition focus-within:ring-4 focus-within:ring-violet-200 ${addons[a.key]
+                        ? "border-violet-500 bg-violet-50 font-semibold shadow-md"
+                        : "border-slate-200 bg-white hover:border-violet-300"
                         }`}
                     >
-                      <div className="flex items-center gap-2.5 sm:gap-3">
+                      <div className="flex items-center gap-3">
+                        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${a.tone} text-base shadow`}>
+                          {a.emoji}
+                        </span>
                         <input
                           type="checkbox"
-                          checked={addons[item.key]}
-                          onChange={() => toggleAddon(item.key)}
-                          className="rounded border-slate-300 text-slate-900 focus:ring-amber-500 w-4 h-4"
+                          checked={addons[a.key]}
+                          onChange={() => toggleAddon(a.key)}
+                          className="h-4 w-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500"
                         />
-
-                        <span className="text-[11px] sm:text-xs">
-                          {item.label}
-                        </span>
+                        <span className="text-xs sm:text-[13px]">{a.label}</span>
                       </div>
-
-                      <span className="font-bold text-slate-900 text-xs whitespace-nowrap">
-                        +{sym}
-                        {Math.round(item.price * rate).toLocaleString()}
+                      <span className="whitespace-nowrap text-xs font-extrabold text-violet-700">
+                        +{money(a.price)}
                       </span>
                     </label>
                   ))}
@@ -324,91 +272,47 @@ export default function Home() {
               </div>
             </div>
 
-            {/* REAL-TIME QUOTE CARD */}
-            <div className="bg-slate-950 text-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between h-fit lg:sticky lg:top-24 shadow-xl">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-400">
-                  Real-Time Quote
+            {/* Quote card */}
+            <div className="relative h-fit overflow-hidden rounded-3xl bg-gradient-to-br bg-gray-800 p-6 text-white shadow-2xl sm:p-8 lg:sticky lg:top-6">
+              <div aria-hidden className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-pink-500/40 blur-3xl" />
+              <div aria-hidden className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-cyan-400/30 blur-3xl" />
+
+              <div className="relative">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-amber-300">
+                  <Sparkles className="h-3.5 w-3.5" /> Real-Time Quote
                 </span>
+                <h4 className="mb-5 mt-3 text-2xl font-extrabold">Estimated Investment</h4>
 
-                <h4 className="font-bold text-xl sm:text-2xl mt-2 mb-5 sm:mb-6">
-                  Estimated Investment
-                </h4>
-
-                <div className="space-y-4 text-xs border-b border-white/10 pb-5 mb-5 text-slate-300">
+                <div className="mb-5 space-y-3 border-b border-white/15 pb-5 text-xs text-violet-100">
                   <div className="flex justify-between gap-3">
-                    <span>
-                      Base Scope (
-                      {plan === "frontend" ? "Frontend" : "Full-Stack"})
-                    </span>
-
-                    <span className="font-bold text-white whitespace-nowrap">
-                      {sym}
-                      {Math.round(prices.base[plan] * rate).toLocaleString()}
-                    </span>
+                    <span>Base Scope ({plan === "frontend" ? "Frontend" : "Full-Stack"})</span>
+                    <span className="whitespace-nowrap font-bold text-white">{money(BASE[plan])}</span>
                   </div>
-
-                  {addons.fastDelivery && (
-                    <div className="flex justify-between gap-3 text-slate-400">
-                      <span>Express Delivery</span>
-                      <span className="whitespace-nowrap">
-                        +{sym}
-                        {Math.round(prices.addons.fastDelivery * rate).toLocaleString()}
-                      </span>
+                  {ADDONS.filter((a) => addons[a.key]).map((a) => (
+                    <div key={a.key} className="flex justify-between gap-3 text-violet-200">
+                      <span>{a.short}</span>
+                      <span className="whitespace-nowrap">+{money(a.price)}</span>
                     </div>
-                  )}
-
-                  {addons.adminPanel && (
-                    <div className="flex justify-between gap-3 text-slate-400">
-                      <span>Admin Dashboard</span>
-                      <span className="whitespace-nowrap">
-                        +{sym}
-                        {Math.round(prices.addons.adminPanel * rate).toLocaleString()}
-                      </span>
-                    </div>
-                  )}
-
-                  {addons.seoSetup && (
-                    <div className="flex justify-between gap-3 text-slate-400">
-                      <span>Technical SEO</span>
-                      <span className="whitespace-nowrap">
-                        +{sym}
-                        {Math.round(prices.addons.seoSetup * rate).toLocaleString()}
-                      </span>
-                    </div>
-                  )}
-
-                  {addons.maintenance && (
-                    <div className="flex justify-between gap-3 text-slate-400">
-                      <span>1-Mo Support</span>
-                      <span className="whitespace-nowrap">
-                        +{sym}
-                        {Math.round(prices.addons.maintenance * rate).toLocaleString()}
-                      </span>
-                    </div>
-                  )}
+                  ))}
                 </div>
 
-                <div className="flex justify-between items-baseline gap-3 mb-6 sm:mb-8">
-                  <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
-                    Total Price
-                  </span>
-
-                  <span className="text-3xl sm:text-4xl font-black text-amber-400 tracking-tight">
+                <div className="mb-8 flex items-baseline justify-between gap-3">
+                  <span className="text-xs font-semibold text-violet-200">Total Price</span>
+                  <span className="bg-gradient-to-r from-amber-300 to-pink-300 bg-clip-text text-4xl font-black tracking-tight text-transparent">
                     {formattedTotal}
                   </span>
                 </div>
-              </div>
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors duration-200 text-center shadow-lg"
-              >
-                <MessageSquare className="w-4 h-4" />
-                Instant WhatsApp Proposal
-              </a>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-900/30 transition hover:bg-emerald-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  Get Proposal on WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -451,8 +355,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
-      </main>
-
-    </div>
+      </main >
+    </div >
   );
 }
