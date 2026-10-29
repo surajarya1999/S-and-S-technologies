@@ -67,13 +67,10 @@ export default function Footer() {
                 alt="S&S Web Technologies logo"
                 className="h-16 w-auto shrink-0 object-contain sm:h-20"
               />
-              <h3 className="text-lg font-extrabold tracking-tight text-white">
-                S&S Web Technologies
-                <span className="bg-gradient-to-r from-fuchsia-400 to-orange-400 bg-clip-text text-transparent">.</span>
-              </h3>
+              
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-slate-400">
-              Full-service digital studio specializing in Next.js development, modern UI/UX design, and high-performance Web APIs.
+              Full-service S&S Web Technologies  specializing in React.js and Next.js development, modern UI/UX design, and high-performance Web APIs.
             </p>
 
             {/* Social Icons */}

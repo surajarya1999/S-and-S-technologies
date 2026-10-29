@@ -9,11 +9,11 @@ const skillCategories = [
   {
     title: "Frontend Engineering",
     icon: Layout,
-    banner: "/banner5.png", // Ensure public/banner5.png exists
+    banner: "/nn.png", // Ensure public/banner5.png exists
     gradient: "from-amber-500/15 via-orange-500/10 to-transparent border-amber-500/30 hover:border-amber-500",
     iconBg: "bg-amber-500 text-slate-950",
     accentText: "text-amber-500",
-    skills: ["React.js & Next.js (App Router)", "TypeScript", "Tailwind CSS", "Three.js / WebGL 3D", "Framer Motion", "Responsive Web Design"],
+    skills: ["React.js & Next.js (App Router)", "TypeScript", "Tailwind CSS / Bootstrap5", "Three.js / WebGL 3D", "Framer Motion", "Responsive Web Design"],
   },
   {
     title: "Backend & Systems",

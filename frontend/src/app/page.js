@@ -63,7 +63,7 @@ export default function Home() {
   const toggleAddon = (key) => setAddons((p) => ({ ...p, [key]: !p[key] }));
 
   const whatsappUrl = `https://wa.me/917509478047?text=${encodeURIComponent(
-    `Hi S&S Digital Studio! I calculated an estimate for a ${plan} project. Estimated Budget: ${formattedTotal}`
+    `Hi S&S Web Technologies! I calculated an estimate for a ${plan} project. Estimated Budget: ${formattedTotal}`
   )}`;
 
   return (
@@ -104,7 +104,7 @@ export default function Home() {
               </h1>
 
               <p className="max-w-xl text-base leading-relaxed text-white/90 md:text-lg">
-                We build fast, responsive, and production-ready Next.js applications, Tailwind CSS interfaces, and interactive digital products designed to scale your revenue.
+                We build fast, responsive, and production-ready React.js and Next.js applications, Tailwind CSS interfaces, and interactive digital products designed to scale your revenue.
               </p>
 
               <div className="flex w-full flex-col items-stretch gap-3 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
@@ -143,7 +143,7 @@ export default function Home() {
               className="w-full h-[260px] sm:h-[420px] md:h-[520px] object-cover [-webkit-backface-visibility:hidden] [transform:translateZ(0)]"
             >
               <source src="/video.mp4" type="video/mp4" />
-              Aapka browser video tag ko support nahi karta.
+              your device does not support the video tag.
             </video>
 
             {/* 10s Delay Slow-mo Text Overlay Matched with Website Theme */}
